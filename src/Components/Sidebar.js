@@ -27,21 +27,22 @@ import { TbMoodKid } from 'react-icons/tb';
 import { ImDisplay } from 'react-icons/im';
 import { SiYoutubemusic } from 'react-icons/si';
 import { RiVideoLine,RiShoppingBag2Line } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
-const SideBar = () => {
+const SideBar = () => { 
 
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
 
   if (!isMenuOpen) return null;
 
-
+  
   return (
-    <div className='openSbar border-r flex flex-col w-[15rem] h-[calc(100vh-4.625rem)] overflow-y-scroll min-w-fit pt-3'>
+    <div className='openSbar flex sticky top-0 overflow-y-auto border-r w-[15rem] min-w-fit h-screen pt-3'> 
 
-      <div className='Firstlist flex pl-2 pr-6 flex-col font-semibold text-sm w-[15rem] pt-3'>
+       <div className='Firstlist flex pl-2  flex-col font-semibold text-sm w-[15rem] pt-3'> 
         <div className='Home px-4 flex py-2 items-center hover:bg-zinc-100 w-full rounded-lg cursor-pointer'>
           <MdHomeFilled size='1.5rem' className='mr-3 mb-1' />
-          <span>Home</span>
+          <span><Link to="/">Home</Link></span>
         </div>
 
         <div className='Shorts px-2 flex py-2 items-center hover:bg-zinc-100 w-full rounded-lg cursor-pointer pt-2'>

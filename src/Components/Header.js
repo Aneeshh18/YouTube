@@ -7,9 +7,6 @@ import { YOUTUBE_SEARCH_SUGGESTION_API_URL } from '../Utils/constants';
 import { cacheResults } from '../Utils/searchSlice';
 
 
-
-
-
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -31,7 +28,7 @@ const Head = () => {
     return () => {
     clearTimeout(timer);
   };
-}, [searchQuery]);
+},);
 
 
 const getSearchSuggestions = async () => {

@@ -3,23 +3,26 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { TfiSearch } from 'react-icons/tfi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMenu } from '../Utils/appSlice';
-import { YOUTUBE_SEARCH_SUGGESTION_API_URL } from '../Utils/constants'
+import { YOUTUBE_SEARCH_SUGGESTION_API_URL } from '../Utils/constants';
 import { cacheResults } from '../Utils/searchSlice';
 
 
 
-const Head = () => {
 
+
+const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSugggestions, setShowSuggestions] = useState(false);
 
 
-  const searchCache = useSelector(store=> store.search)
+  const searchCache = useSelector(store=> store.search);
+  const dispatch = useDispatch(); 
 
-  useEffect(() => {
+// console.log("ApiCall-");
+  useEffect(() => { 
     const timer = setTimeout(() => {
-    if (searchCache[searchQuery]) {
+    if (searchCache[searchQuery]) {  //if present in cache => don't make apic all
       setSuggestions(searchCache[searchQuery]);
     } else {
       getSearchSuggestions()} 
@@ -42,13 +45,14 @@ const getSearchSuggestions = async () => {
   }));
 }
 
-const dispatch = useDispatch();
+//to update cache
 const toggleMenuHandler = () => {
   dispatch(toggleMenu());
 };
 
+
 return (
-  <div className='px-4 py-2 flex justify-between items-center shadow-md w-full sticky top-0 z-10 bg-white h-[4.62rem]'>
+  <div className='px-4 py-2 flex justify-between items-center shadow-md w-full sticky top-0 z-10 bg-white h-[4.62rem] outline'>
 
     <div className='left-items flex items-center'>
       <button className='p-2 rounded-full hover:bg-zinc-200' >
@@ -74,21 +78,30 @@ return (
           onFocus={() => setShowSuggestions(true)}
           onBlur={() => setShowSuggestions(false)}
         />
-        <div className='p-3 cursor-pointer px-8 bg-zinc-100 hover:bg-zinc-200 rounded-r-3xl max-md:bg-white max-md:border-none max-md:px-4 max-lg:px-4'>
+         <button className='p-3 cursor-pointer px-8 bg-zinc-100 hover:bg-zinc-200 rounded-r-3xl max-md:bg-white max-md:border-none max-md:px-4 max-lg:px-4'>
           <TfiSearch size='1.2rem' />
-        </div>
+          </button>
       </div>
 
-      {showSugggestions && <div
+      {showSugggestions && 
+      <div
         className="px-2 py-1.5 w-[41.5rem] fixed shadow-lg rounded-lg border border-zinc-200 bg-zinc-100">
         <ul >
-          {suggestions.map(s => <li key={s} className='flex py-2 hover:bg-gray-500 shadow-sm'><span className='flex-shrink-0 mt-1 pr-2'><TfiSearch size='0.9rem' /></span> <span className='flex-grow'>{s}</span></li>)}
+          {suggestions.map(s => 
+          <li 
+          key={s} 
+          className='flex py-2 hover:bg-gray-500 shadow-sm'
+          >
+            <span className='flex-shrink-0 mt-1 pr-2'><TfiSearch size='0.9rem' /></span> 
+            <span className='flex-grow'>{s}</span>
+          </li>
+          )}
         </ul>
       </div>}
     </div>
 
     <div>
-      <img className='h-8' src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="" />
+      <img className='h-8' src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" alt="user-icon" />
     </div>
 
   </div>
